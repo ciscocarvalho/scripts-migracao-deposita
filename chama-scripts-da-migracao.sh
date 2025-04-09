@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 
-./copia-scripts-da-migracao.sh
+NOME_DO_CONTAINER="${1:-dspacedb}"
+
+./copia-scripts-da-migracao.sh "$NOME_DO_CONTAINER"
 
 SCRIPTS=(
   "/tmp/funcoes.sql"
@@ -19,5 +21,5 @@ SCRIPTS=(
 
 for script in ${SCRIPTS[@]}; do
   echo "Rodando script $script"
-  docker exec dspacedb psql -U dspace -d dspace -f "$script"
+  docker exec "$NOME_DO_CONTAINER" psql -U dspace -d dspace -f "$script"
 done
